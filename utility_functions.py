@@ -8,6 +8,9 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
 # Displaying images
 def visualize_dataset(images, labels, label_to_article):
   fig, axs = plt.subplots(2, 5, figsize = (16, 7))
@@ -65,6 +68,22 @@ def convolve2d(image, kernel):
             output[y,x]=(kernel*image_padded[y:y+kernel.shape[1],x:x+kernel.shape[0]]).sum()        
     return output
 
+def display_PCA(train_images, nbr_points, label_to_article):
+  # Dimensionality reduction 
+  pca = PCA(n_components=2)
+  pca_train_images = pca.fit_transform(np.reshape(train_images/255., [-1, 28*28]))
+
+  fig = plt.figure(figsize=(14, 10))
+  fig.suptitle('PCA of Fasion-MNIST Dataset', fontsize=40)
+
+  for i in range(10):
+    # Select a subset of the images
+    indices = np.where(train_labels == i)[0][:nbr_points]
+
+    # Display images in a 2D grid
+    plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
+  plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
+  
 def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
     
