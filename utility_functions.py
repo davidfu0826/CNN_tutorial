@@ -68,7 +68,7 @@ def convolve2d(image, kernel):
             output[y,x]=(kernel*image_padded[y:y+kernel.shape[1],x:x+kernel.shape[0]]).sum()        
     return output
 
-def display_PCA(train_images, nbr_points, label_to_article):
+def display_PCA(train_images, train_labels, nbr_points, label_to_article):
   # Dimensionality reduction 
   pca = PCA(n_components=2)
   pca_train_images = pca.fit_transform(np.reshape(train_images/255., [-1, 28*28]))
