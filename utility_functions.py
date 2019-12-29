@@ -101,7 +101,7 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3)):
 
   # Fully-connected layers
   x = Flatten()(x)
-  x = Dense(64, activation="relu")(x)
+  x = Dense(32, activation="relu")(x)
 
   # Output Layer
   outputs = Dense(10, activation="softmax")(x)
