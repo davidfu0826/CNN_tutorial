@@ -11,6 +11,9 @@ import seaborn as sns
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
+from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.models import Model
+
 # Displaying images
 def visualize_dataset(images, labels, label_to_article):
   fig, axs = plt.subplots(2, 5, figsize = (16, 7))
@@ -83,6 +86,27 @@ def display_PCA(train_images, train_labels, nbr_points, label_to_article):
     # Display images in a 2D grid
     plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
+  
+def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3)):
+  # Keras Functional API
+
+  # Input layer
+  inputs = Input(shape=(28, 28, 1))
+
+  # Convolutional base
+  x = inputs
+  for nbr_filter in nbr_filters:
+    x = Conv2D(nbr_filter, kernel_shape, activation="relu", padding="same")(x)
+    x = MaxPooling2D()(x)
+
+  # Fully-connected layers
+  x = Flatten()(x)
+  x = Dense(64, activation="relu")(x)
+
+  # Output Layer
+  outputs = Dense(10, activation="softmax")(x)
+
+  return Model(inputs=inputs, outputs=outputs)
   
 def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
