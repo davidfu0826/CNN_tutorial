@@ -87,7 +87,7 @@ def display_PCA(train_images, train_labels, nbr_points, label_to_article):
     plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
   
-def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3)):
+def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32]):
   # Keras Functional API
 
   # Input layer
@@ -101,7 +101,8 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3)):
 
   # Fully-connected layers
   x = Flatten()(x)
-  x = Dense(32, activation="relu")(x)
+  for nbr_node in nbr_nodes:
+    x = Dense(nbr_node, activation="relu")(x)
 
   # Output Layer
   outputs = Dense(10, activation="softmax")(x)
