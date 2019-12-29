@@ -84,3 +84,18 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     return fig
+  
+# Function for preparing data
+def prepare_binary_dataset(images, labels, first_label, second_label):
+  # Select only the relevant images for training
+  first_indices = np.where(labels == first_label)
+  second_indices = np.where(labels == second_label)
+  indices = np.hstack([first_indices, second_indices])[0]
+
+  # All images are flattened to 1D-arrays
+  new_shape = (-1, 28*28) 
+  X = np.reshape(images[indices], new_shape)
+
+  y = labels[indices] == first_label
+
+  return X, y
