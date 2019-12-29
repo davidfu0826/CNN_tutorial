@@ -105,8 +105,13 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3)):
 
   # Output Layer
   outputs = Dense(10, activation="softmax")(x)
-
-  return Model(inputs=inputs, outputs=outputs)
+  
+  model = Model(inputs=inputs, outputs=outputs)
+  model.compile(loss="categorical_crossentropy",
+              optimizer="sgd",
+              metrics=["accuracy"])
+  
+  return model
   
 def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
