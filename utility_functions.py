@@ -8,7 +8,22 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-# Put these functions in to
+# Displaying images
+def visualize_dataset(images, labels, label_to_article):
+  fig, axs = plt.subplots(2, 5, figsize = (16, 7))
+  for i in range(10):
+    grid_index = (i//5, i%5)
+
+    index = np.where(labels==i)[0][0]
+    image = images[index]
+    axs[grid_index].imshow(image/255., cmap=plt.cm.gray)
+    title = f"Article:  {label_to_article[labels[index]]}\n" + \
+            f"Label:  {i}"
+    axs[grid_index].set_title(title)
+    axs[grid_index].axis('off')
+  plt.show()
+
+# Loading image
 def load_example_image(url):
   image = io.imread(url)    # Load the image
   image = color.rgb2gray(image)       # Convert the image to grayscale (1 channel)
