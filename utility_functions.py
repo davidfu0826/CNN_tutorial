@@ -11,7 +11,7 @@ import seaborn as sns
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
-from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.models import Model
 
 # Displaying images
@@ -87,7 +87,29 @@ def display_PCA(train_images, train_labels, nbr_points, label_to_article):
     plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
   
-def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32]):
+def build_ANN(nbr_nodes=[32], dropout=True):
+  # Keras Functional API
+
+  # Input layer
+  inputs = Input(shape=(28*28,))
+ 
+  x = inputs
+  # Fully-connected layers
+  for nbr_node in nbr_nodes:
+    x = Dense(nbr_node, activation="relu")(x)
+    x = Dropout(0.3)(x)
+
+  # Output Layer
+  outputs = Dense(10, activation="softmax")(x)
+  
+  
+  model = Model(inputs=inputs, outputs=outputs)
+  model.compile(loss="categorical_crossentropy",
+              optimizer="adam",
+              metrics=["accuracy"])
+  
+  return model
+def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout=True):
   # Keras Functional API
 
   # Input layer
@@ -98,18 +120,21 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32]):
   for nbr_filter in nbr_filters:
     x = Conv2D(nbr_filter, kernel_shape, activation="relu", padding="same")(x)
     x = MaxPooling2D()(x)
+    x = Dropout(0.3)(x)
 
   # Fully-connected layers
   x = Flatten()(x)
   for nbr_node in nbr_nodes:
     x = Dense(nbr_node, activation="relu")(x)
+    x = Dropout(0.3)(x)
 
   # Output Layer
   outputs = Dense(10, activation="softmax")(x)
   
+  
   model = Model(inputs=inputs, outputs=outputs)
   model.compile(loss="categorical_crossentropy",
-              optimizer="sgd",
+              optimizer="adam",
               metrics=["accuracy"])
   
   return model
