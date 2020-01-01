@@ -109,6 +109,7 @@ def build_ANN(nbr_nodes=[32], dropout=True):
               metrics=["accuracy"])
   
   return model
+
 def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout=True):
   # Keras Functional API
 
@@ -186,5 +187,34 @@ def prepare_binary_dataset(images, labels, first_label, second_label):
   X = np.reshape(images[indices], new_shape)
 
   y = labels[indices] == first_label
+
+  return X, y
+
+
+def prepare_NN_dataset(images, labels):
+  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
+  new_shape = (-1, 28*28)
+
+  X = np.reshape(images, new_shape)
+  y = to_categorical(labels)
+
+  return X, y
+
+
+def prepare_ANN_dataset(images, labels):
+  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
+  new_shape = (-1, 28*28)
+
+  X = np.reshape(images, new_shape)
+  y = to_categorical(labels)
+
+  return X, y
+
+def prepare_CNN_dataset(images, labels):
+  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
+  new_shape = (-1, 28, 28, 1)
+
+  X = np.reshape(images, new_shape)
+  y = to_categorical(labels)
 
   return X, y
