@@ -14,6 +14,8 @@ from sklearn.decomposition import PCA
 from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.models import Model
 
+from tensorflow.keras.utils import to_categorical
+
 # Displaying images
 def visualize_dataset(images, labels, label_to_article):
   fig, axs = plt.subplots(2, 5, figsize = (16, 7))
