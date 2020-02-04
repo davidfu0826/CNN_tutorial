@@ -17,6 +17,20 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.utils import to_categorical
 
 # Displaying images
+def imshow(img):
+  """Displays an image and it's pixel values
+  
+  """
+  fig, ax = plt.subplots()
+  fig.set_size_inches(10.5, 10.5, forward=True)
+  min_val, max_val = 0, 15
+  ax.matshow(img, cmap=plt.cm.Blues)
+
+  for i in range(img.shape[0]):
+      for j in range(img.shape[1]):
+          c = img[j,i]
+          ax.text(i, j, str(c), va='center', ha='center')
+
 def visualize_dataset(images, labels, label_to_article):
   fig, axs = plt.subplots(2, 5, figsize = (16, 7))
   for i in range(10):
