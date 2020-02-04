@@ -79,10 +79,10 @@ def scatter_plot(images, labels, label_to_article, title='PCA of Fasion-MNIST Da
 
   for i in range(10):
     # Select a subset of the images
-    indices = np.where(train_labels == i)[0][:nbr_samples]
+    indices = np.where(labels == i)[0][:nbr_samples]
 
     # Display images in a 2D grid
-    plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
+    plt.scatter(images[indices][:,0], images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
 
 def display_PCA(train_images, train_labels, nbr_points, label_to_article):
