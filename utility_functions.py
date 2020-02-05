@@ -71,26 +71,21 @@ def visualize_convolution(original_image, kernel):
   axs[1].set_title("Convolved image")
   axs[1].axis('off')
 
-def convolve2d(image, kernel):
-    # This function which takes an image and a kernel 
-    # and returns the convolution of them
-    # Args:
-    #   image: a numpy array of size [image_height, image_width].
-    #   kernel: a numpy array of size [kernel_height, kernel_width].
-    # Returns:
-    #   a numpy array of size [image_height, image_width] (convolution output).
-    
-    kernel = np.flipud(np.fliplr(kernel))    # Flip the kernel
-    output = np.zeros_like(image)            # convolution output
-    # Add zero padding to the input image
-    image_padded = np.zeros((image.shape[0] + 2, image.shape[1] + 2))   
-    image_padded[1:-1, 1:-1] = image
-    for x in range(image.shape[1]):     # Loop over every pixel of the image
-        for y in range(image.shape[0]):
-            # element-wise multiplication of the kernel and the image
-            output[y,x]=(kernel*image_padded[y:y+kernel.shape[1],x:x+kernel.shape[0]]).sum()        
-    return output
-  
+def visualize_convolution_grid(img_list, kernel):
+  fig, ax1, ax2 = plt.subplots(len(img_list), 2, figsize = (10, 6))
+
+  for i in range(len(img_list)):
+	# Original image
+	ax1[i].imshow(original_image, cmap=plt.cm.gray)
+	ax1[i].set_title("Original image")
+	ax1[i].axis('off')
+
+	# Convoluted image
+	convolved_image = convolve(np.array(original_image), np.array(kernel))
+	ax2[i].imshow(convolved_image, cmap=plt.cm.gray)
+	ax2[i].set_title("Convolved image")
+	ax2[i].axis('off')
+
 def convolve(image, kernel):
 	# grab the spatial dimensions of the image, along with
 	# the spatial dimensions of the kernel
