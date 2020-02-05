@@ -72,19 +72,19 @@ def visualize_convolution(original_image, kernel):
   axs[1].axis('off')
 
 def visualize_convolution_grid(img_list, kernel):
-  fig, ax1, ax2 = plt.subplots(len(img_list), 2, figsize = (10, 6))
+  fig, axs = plt.subplots(len(img_list), 2, figsize = (10, 6))
 
   for i in range(len(img_list)):
     # Original image
-    ax1[i].imshow(img_list[i], cmap=plt.cm.gray)
-    ax1[i].set_title("Original image")
-    ax1[i].axis('off')
+    axs[i][0].imshow(img_list[i], cmap=plt.cm.gray)
+    axs[i][0].set_title("Original image")
+    axs[i][0].axis('off')
 
     # Convoluted image
     convolved_image = convolve(np.array(img_list[i]), np.array(kernel))
-    ax2[i].imshow(convolved_image, cmap=plt.cm.gray)
-    ax2[i].set_title("Convolved image")
-    ax2[i].axis('off')
+    axs[i][1].imshow(convolved_image, cmap=plt.cm.gray)
+    axs[i][1].set_title("Convolved image")
+    axs[i][1].axis('off')
 
 def convolve(image, kernel):
 	# grab the spatial dimensions of the image, along with
