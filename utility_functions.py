@@ -62,7 +62,7 @@ def visualize_convolution(original_image, kernel):
   axs[0].axis('off')
 
   # Convoluted image
-  convolved_image = convolve(original_image, kernel)
+  convolved_image = convolve(np.array(original_image), np.array(kernel))
   #convolved_image = convolve2d(original_image, kernel)
   #convolved_image = skimage.measure.block_reduce(convolved_image, (2,2), np.max) # Maxpooling
   #convolved_image = exposure.equalize_adapthist(convolved_image/np.max(np.abs(convolved_image)), clip_limit=0.03)
