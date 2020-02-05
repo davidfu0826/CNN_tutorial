@@ -51,6 +51,7 @@ def visualize_dataset(images, labels, label_to_article):
 def load_example_image(url):
   image = io.imread(url)    # Load the image
   image = color.rgb2gray(image)       # Convert the image to grayscale (1 channel)
+  image *= 255
   return image
 
 def visualize_convolution(original_image, kernel):
