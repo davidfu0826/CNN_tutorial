@@ -71,8 +71,8 @@ def visualize_convolution(original_image, kernel):
   axs[1].set_title("Convolved image")
   axs[1].axis('off')
 
-def visualize_convolution_grid(img_list, kernel):
-  fig, axs = plt.subplots(len(img_list), 2, figsize = (10, 6))
+def visualize_convolution_grid(img_list, kernel, figsize = (14, 8)):
+  fig, axs = plt.subplots(len(img_list), 2, figsize = figsize)
 
   for i in range(len(img_list)):
     # Original image
