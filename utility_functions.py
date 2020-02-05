@@ -76,12 +76,12 @@ def visualize_convolution_grid(img_list, kernel):
 
   for i in range(len(img_list)):
 	# Original image
-	ax1[i].imshow(original_image, cmap=plt.cm.gray)
+	ax1[i].imshow(img_list[i], cmap=plt.cm.gray)
 	ax1[i].set_title("Original image")
 	ax1[i].axis('off')
 
 	# Convoluted image
-	convolved_image = convolve(np.array(original_image), np.array(kernel))
+	convolved_image = convolve(np.array(img_list[i]), np.array(kernel))
 	ax2[i].imshow(convolved_image, cmap=plt.cm.gray)
 	ax2[i].set_title("Convolved image")
 	ax2[i].axis('off')
