@@ -89,7 +89,7 @@ def convolve2d(image, kernel):
 
 def scatter_plot(images, labels, label_to_article, title='PCA of Fasion-MNIST Dataset', nbr_samples=400):
   fig = plt.figure(figsize=(14, 10))
-  fig.suptitle('PCA of Fasion-MNIST Dataset', fontsize=40)
+  fig.suptitle(title, fontsize=40)
 
   for i in range(10):
     # Select a subset of the images
@@ -99,22 +99,7 @@ def scatter_plot(images, labels, label_to_article, title='PCA of Fasion-MNIST Da
     plt.scatter(images[indices][:,0], images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
 
-def display_PCA(train_images, train_labels, nbr_points, label_to_article):
-  # Dimensionality reduction 
-  pca = PCA(n_components=2)
-  pca_train_images = pca.fit_transform(np.reshape(train_images/255., [-1, 28*28]))
 
-  fig = plt.figure(figsize=(14, 10))
-  fig.suptitle('PCA of Fasion-MNIST Dataset', fontsize=40)
-
-  for i in range(10):
-    # Select a subset of the images
-    indices = np.where(train_labels == i)[0][:nbr_points]
-
-    # Display images in a 2D grid
-    plt.scatter(pca_train_images[indices][:,0], pca_train_images[indices][:,1])
-  plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
-  
 def build_ANN(nbr_nodes=[32], dropout=True):
   # Keras Functional API
 
