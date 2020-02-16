@@ -185,8 +185,16 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout
               metrics=["accuracy"])
   
   return model
+
+def print_confusion_matrices(x, y, class_names):
+    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True)
+    data = confusion_matrix(y, x)
+    data_norm = confusion_matrix(y, x, normalize="true")
+
+    print_confusion_matrix(data, class_names=class_names, title="Confusion matrix (without normalization)", ax=ax1);
+    print_confusion_matrix(data_norm, class_names=class_names, title="Confusion matrix (with normalization)", float=True, ax=ax2);
   
-def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix', float=False):
+def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix', float=False, ax=None):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
     
     Arguments
@@ -213,9 +221,9 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     fig = plt.figure(figsize=figsize)
     fig.suptitle(title, fontsize=16)
     if not float:
-        heatmap = sns.heatmap(df_cm, annot=True, fmt="d")
+        heatmap = sns.heatmap(df_cm, annot=True, fmt="d", ax=ax)
     else:
-        heatmap = sns.heatmap(df_cm, annot=True, fmt=".2%")
+        heatmap = sns.heatmap(df_cm, annot=True, fmt=".2%", ax=ax)
         #raise ValueError("Confusion matrix values must be integers.")
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
