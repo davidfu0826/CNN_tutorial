@@ -186,7 +186,7 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout
   
   return model
   
-def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14):
+def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix'):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
     
     Arguments
@@ -211,7 +211,7 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
         confusion_matrix, index=class_names, columns=class_names, 
     )
     fig = plt.figure(figsize=figsize)
-    fig.suptitle('Confusion matrix (without normalization)', fontsize=16)
+    fig.suptitle(title, fontsize=16)
     try:
         heatmap = sns.heatmap(df_cm, annot=True, fmt="d")
     except ValueError:
