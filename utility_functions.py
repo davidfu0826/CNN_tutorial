@@ -10,6 +10,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from sklearn.metrics import confusion_matrix
+
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
