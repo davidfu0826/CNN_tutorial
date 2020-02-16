@@ -189,7 +189,7 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout
   return model
 
 def print_confusion_matrices(x, y, class_names):
-    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(20,14))
+    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(14,7))
     data = confusion_matrix(y, x)
     data_norm = confusion_matrix(y, x, normalize="true")
 
@@ -232,7 +232,6 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
     ax.set_ylabel('True label')
     ax.set_xlabel('Predicted label')
-    return fig
   
 # Function for preparing data
 def prepare_binary_dataset(images, labels, first_label, second_label):
