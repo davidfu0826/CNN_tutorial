@@ -220,8 +220,9 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     df_cm = pd.DataFrame(
         confusion_matrix, index=class_names, columns=class_names, 
     )
-    fig = plt.figure(figsize=figsize)
-    fig.suptitle(title, fontsize=16)
+    #fig = plt.figure(figsize=figsize)
+    ax.set_title(title)
+    #fig.suptitle(title, fontsize=16)
     if not float:
         heatmap = sns.heatmap(df_cm, annot=True, fmt="d", ax=ax)
     else:
@@ -229,8 +230,8 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
         #raise ValueError("Confusion matrix values must be integers.")
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
+    ax.set_ylabel('True label')
+    ax.set_xlabel('Predicted label')
     return fig
   
 # Function for preparing data
