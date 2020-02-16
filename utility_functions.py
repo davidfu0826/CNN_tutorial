@@ -186,7 +186,7 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout
   
   return model
   
-def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix'):
+def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix', float=False):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
     
     Arguments
@@ -212,9 +212,9 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     )
     fig = plt.figure(figsize=figsize)
     fig.suptitle(title, fontsize=16)
-    try:
+    if not float:
         heatmap = sns.heatmap(df_cm, annot=True, fmt="d")
-    except ValueError:
+    else:
         heatmap = sns.heatmap(df_cm, annot=True, fmt=".2%")
         #raise ValueError("Confusion matrix values must be integers.")
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
