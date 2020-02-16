@@ -189,7 +189,7 @@ def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout
   return model
 
 def print_confusion_matrices(x, y, class_names):
-    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(18,7))
+    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(20,8))
     data = confusion_matrix(y, x)
     data_norm = confusion_matrix(y, x, normalize="true")
 
