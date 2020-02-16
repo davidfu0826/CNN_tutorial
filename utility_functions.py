@@ -215,7 +215,7 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     try:
         heatmap = sns.heatmap(df_cm, annot=True, fmt="d")
     except ValueError:
-        heatmap = sns.heatmap(df_cm, annot=True, fmt="f")
+        heatmap = sns.heatmap(df_cm, annot=True, fmt=".2%")
         #raise ValueError("Confusion matrix values must be integers.")
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
