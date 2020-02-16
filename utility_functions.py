@@ -36,7 +36,7 @@ def imshow(img):
           ax.text(i, j, str(c), va='center', ha='center')
 
 def visualize_dataset(images, labels, label_to_article):
-  fig, axs = plt.subplots(2, 5, figsize = (16, 7))
+  fig, axs = plt.subplots(2, 5, figsize = (12, 7))
   for i in range(10):
     grid_index = (i//5, i%5)
 
