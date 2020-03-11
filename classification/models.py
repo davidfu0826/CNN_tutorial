@@ -37,7 +37,7 @@ def build_ANN(nbr_nodes:List[int] = [32], dropout:bool = True, num_classes:int =
 	return model
 
 def build_CNN(nbr_filters:List[int] = [64, 32], kernel_shape:Tuple[int] = (3,3), nbr_nodes:List[int] = [32], dropout:bool = True, num_classes:int = 10) -> Model:
-  	"""Builds a model for supervised learning using Keras Functional API.
+	"""Builds a model for supervised learning using Keras Functional API.
 
 	Args:
 		nbr_filters: Number of filters in each convolutional layer.
