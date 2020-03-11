@@ -70,7 +70,7 @@ def visualize_convolution(original_image: np.ndarray, kernel: List[Any]) -> None
   axs[1].set_title("Convolved image")
   axs[1].axis('off')
 
-def visualize_convolution_grid(img_list: np.ndarray, kernel: List[Any], figsize = (14, 8): Tuple[int, int]) -> None:
+def visualize_convolution_grid(img_list: np.ndarray, kernel: List[Any], figsize: Tuple[int,int] = (14,8)) -> None:
   fig, axs = plt.subplots(len(img_list), 2, figsize = figsize)
 
   for i in range(len(img_list)):
