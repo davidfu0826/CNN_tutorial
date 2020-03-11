@@ -6,7 +6,7 @@ from tensorflow.keras.models import Model
 from typing import List, Tuple
 
 
-def build_ANN(nbr_nodes=[32]: List[int], dropout=True: bool, num_classes: int = 10) -> Model:
+def build_ANN(nbr_nodes:List[int] = [32], dropout:bool = True, num_classes:int = 10) -> Model:
 	"""Builds a model for supervised learning using Keras Functional API.
 
 	Args:
@@ -36,7 +36,7 @@ def build_ANN(nbr_nodes=[32]: List[int], dropout=True: bool, num_classes: int = 
 
 	return model
 
-def build_CNN(nbr_filters=[64, 32]: List[int], kernel_shape=(3,3): Tuple[int], nbr_nodes=[32]: List[int], dropout=True: bool, num_classes: int = 10) -> Model:
+def build_CNN(nbr_filters:List[int] = [64, 32], kernel_shape:Tuple[int] = (3,3), nbr_nodes:List[int] = [32], dropout:bool = True, num_classes:int = 10) -> Model:
   	"""Builds a model for supervised learning using Keras Functional API.
 
 	Args:
