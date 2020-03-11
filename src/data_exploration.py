@@ -15,11 +15,6 @@ from sklearn.metrics import confusion_matrix
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
-from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
-from tensorflow.keras.models import Model
-
-from tensorflow.keras.utils import to_categorical
-
 # Displaying images
 def imshow(img):
   """Displays an image and it's pixel values
@@ -134,67 +129,13 @@ def scatter_plot(images, labels, label_to_article, title='PCA of Fasion-MNIST Da
     plt.scatter(images[indices][:,0], images[indices][:,1])
   plt.legend([label_to_article[i] for i in range(10)], prop={'size': 16});
 
-
-def build_ANN(nbr_nodes=[32], dropout=True):
-  # Keras Functional API
-
-  # Input layer
-  inputs = Input(shape=(28*28,))
- 
-  x = inputs
-  # Fully-connected layers
-  for nbr_node in nbr_nodes:
-    x = Dense(nbr_node, activation="relu")(x)
-    x = Dropout(0.3)(x)
-
-  # Output Layer
-  outputs = Dense(10, activation="softmax")(x)
-  
-  
-  model = Model(inputs=inputs, outputs=outputs)
-  model.compile(loss="categorical_crossentropy",
-              optimizer="adam",
-              metrics=["accuracy"])
-  
-  return model
-
-def build_CNN(nbr_filters=[64, 64], kernel_shape=(3, 3), nbr_nodes=[32], dropout=True):
-  # Keras Functional API
-
-  # Input layer
-  inputs = Input(shape=(28, 28, 1))
-
-  # Convolutional base
-  x = inputs
-  for nbr_filter in nbr_filters:
-    x = Conv2D(nbr_filter, kernel_shape, activation="relu", padding="same")(x)
-    x = MaxPooling2D()(x)
-    x = Dropout(0.3)(x)
-
-  # Fully-connected layers
-  x = Flatten()(x)
-  for nbr_node in nbr_nodes:
-    x = Dense(nbr_node, activation="relu")(x)
-    x = Dropout(0.3)(x)
-
-  # Output Layer
-  outputs = Dense(10, activation="softmax")(x)
-  
-  
-  model = Model(inputs=inputs, outputs=outputs)
-  model.compile(loss="categorical_crossentropy",
-              optimizer="adam",
-              metrics=["accuracy"])
-  
-  return model
-
 def print_confusion_matrices(x, y, class_names):
-    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(20,8))
+    #fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=(20,8))
     data = confusion_matrix(y, x)
     data_norm = confusion_matrix(y, x, normalize="true")
 
-    print_confusion_matrix(data, class_names=class_names, title="Confusion matrix (without normalization)", ax=ax1);
-    print_confusion_matrix(data_norm, class_names=class_names, title="Confusion matrix (with normalization)", float=True, ax=ax2);
+    print_confusion_matrix(data, class_names=class_names, title="Confusion matrix (without normalization)");#, ax=ax1);
+    print_confusion_matrix(data_norm, class_names=class_names, title="Confusion matrix (with normalization)", float=True);#, ax=ax2);
   
 def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), fontsize=14, title='Confusion matrix', float=False, ax=None):
     """Prints a confusion matrix, as returned by sklearn.metrics.confusion_matrix, as a heatmap.
@@ -220,9 +161,13 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
     df_cm = pd.DataFrame(
         confusion_matrix, index=class_names, columns=class_names, 
     )
-    #fig = plt.figure(figsize=figsize)
-    ax.set_title(title)
-    #fig.suptitle(title, fontsize=16)
+
+    if ax is None:
+      fig = plt.figure(figsize=figsize)
+      fig.suptitle(title, fontsize=16)
+    else:
+      ax.set_title(title)
+
     if not float:
         heatmap = sns.heatmap(df_cm, annot=True, fmt="d", ax=ax)
     else:
@@ -230,49 +175,10 @@ def print_confusion_matrix(confusion_matrix, class_names, figsize = (10,7), font
         #raise ValueError("Confusion matrix values must be integers.")
     heatmap.yaxis.set_ticklabels(heatmap.yaxis.get_ticklabels(), rotation=0, ha='right', fontsize=fontsize)
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=45, ha='right', fontsize=fontsize)
-    ax.set_ylabel('True label')
-    ax.set_xlabel('Predicted label')
-  
-# Function for preparing data
-def prepare_binary_dataset(images, labels, first_label, second_label):
-  # Select only the relevant images for training
-  first_indices = np.where(labels == first_label)
-  second_indices = np.where(labels == second_label)
-  indices = np.hstack([first_indices, second_indices])[0]
 
-  # All images are flattened to 1D-arrays
-  new_shape = (-1, 28*28) 
-  X = np.reshape(images[indices], new_shape)
-
-  y = labels[indices] == first_label
-
-  return X, y
-
-
-def prepare_NN_dataset(images, labels):
-  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
-  new_shape = (-1, 28*28)
-
-  X = np.reshape(images, new_shape)
-  y = to_categorical(labels)
-
-  return X, y
-
-
-def prepare_ANN_dataset(images, labels):
-  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
-  new_shape = (-1, 28*28)
-
-  X = np.reshape(images, new_shape)
-  y = to_categorical(labels)
-
-  return X, y
-
-def prepare_CNN_dataset(images, labels):
-  # Images are reshapen from (-1, 28, 28) to (-1, 28, 28, 1) in acc. with Keras API
-  new_shape = (-1, 28, 28, 1)
-
-  X = np.reshape(images, new_shape)
-  y = to_categorical(labels)
-
-  return X, y
+    if ax is None:
+      plt.ylabel('True label')
+      plt.xlabel('Predicted label')
+    else:
+      ax.set_ylabel('True label')
+      ax.set_xlabel('Predicted label')
