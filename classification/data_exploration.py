@@ -15,8 +15,10 @@ from sklearn.metrics import confusion_matrix
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
+from typing import Dict, List, Any, Tuple
+
 # Displaying images
-def imshow(img):
+def imshow(img: np.ndarray) -> None:
   """Displays an image and it's pixel values
   
   """
@@ -30,7 +32,7 @@ def imshow(img):
           c = img[j,i]
           ax.text(i, j, str(c), va='center', ha='center')
 
-def visualize_dataset(images, labels, label_to_article):
+def visualize_dataset(images: np.ndarray, labels: np.ndarray, label_to_article: Dict[int, str]) -> None:
   fig, axs = plt.subplots(2, 5, figsize = (12, 7))
   for i in range(10):
     grid_index = (i//5, i%5)
@@ -45,13 +47,13 @@ def visualize_dataset(images, labels, label_to_article):
   plt.show()
 
 # Loading image
-def load_example_image(url):
+def load_example_image(url: str) -> np.ndarray:
   image = io.imread(url)    # Load the image
   image = color.rgb2gray(image)       # Convert the image to grayscale (1 channel)
   image *= 255
   return image
 
-def visualize_convolution(original_image, kernel):
+def visualize_convolution(original_image: np.ndarray, kernel: List[Any]) -> None:
   fig, axs = plt.subplots(1, 2, figsize = (14, 8))
 
   # Original image
@@ -68,7 +70,7 @@ def visualize_convolution(original_image, kernel):
   axs[1].set_title("Convolved image")
   axs[1].axis('off')
 
-def visualize_convolution_grid(img_list, kernel, figsize = (14, 8)):
+def visualize_convolution_grid(img_list: np.ndarray, kernel: List[Any], figsize = (14, 8): Tuple[int, int]) -> None:
   fig, axs = plt.subplots(len(img_list), 2, figsize = figsize)
 
   for i in range(len(img_list)):
@@ -83,7 +85,7 @@ def visualize_convolution_grid(img_list, kernel, figsize = (14, 8)):
     axs[i][1].set_title("Convolved image")
     axs[i][1].axis('off')
 
-def convolve(image, kernel):
+def convolve(image: np.ndarray, kernel: List[Any]) -> np.ndarray:
 	# grab the spatial dimensions of the image, along with
 	# the spatial dimensions of the kernel
 	(iH, iW) = image.shape[:2]
@@ -117,7 +119,7 @@ def convolve(image, kernel):
 	# return the output image
 	return output
 
-def scatter_plot(images, labels, label_to_article, title='PCA of Fasion-MNIST Dataset', nbr_samples=400):
+def scatter_plot(images: np.ndarray, labels: np.ndarray, label_to_article: Dict[int,str], title: str = 'PCA of Fasion-MNIST Dataset', nbr_samples: int = 400) -> None:
   fig = plt.figure(figsize=(14, 10))
   fig.suptitle(title, fontsize=40)
 
